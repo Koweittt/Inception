@@ -1,15 +1,12 @@
-FROM debian:trixie
+FROM debian:bookworm
 
 RUN apt update -y \
-    && apt-get install mariadb-server -y
+    && apt-get install mariadb-server -y \
+    && mkdir launch_sh
 
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+COPY conf/create_db.sh launch_sh/create_db.sh
 
-RUN service mysql start \
-    && mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\';" \
-    && mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';" \
-    && mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\` @'%' IDENTIFIED BY '${SQL_PASSWORD}';" \
-    && mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';" \
-    && mysql -e "FLUSH PRIVILEGES;" \
-    && mysqladmin -u -root -p$SQL_ROOT_PASSWORD shutdown \
-    && exec mysqld_safe
+RUN chmod 777 launch_sh/create_db.sh
+
+ENTRYPOINT ["launch_sh/create_db.sh"]

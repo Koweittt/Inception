@@ -1,4 +1,4 @@
-FROM debian:trixie
+FROM debian:bookworm
 
 RUN apt update -y \
     && apt install nginx -y \
