@@ -1,2 +1,3 @@
-cd ~/Inception
-sudo rm -rf srcs/Users
+# Build context only needs the Dockerfile and conf/
+.git
+*.md
