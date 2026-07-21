@@ -1,7 +1,7 @@
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb
+    image: mariadb:inception
     networks:
       - inception
     build:
@@ -19,7 +19,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx
+    image: nginx:inception
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -36,7 +36,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress
+    image: wordpress:inception
     env_file: .env
     volumes:
       - wordpress:/var/www/wordpress

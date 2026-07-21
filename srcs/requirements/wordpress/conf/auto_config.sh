@@ -19,7 +19,7 @@ if [ ! -f wp-config.php ]; then
     --dbhost="mariadb:3306"
 
   wp core install --allow-root \
-    --url="$DOMAIN_NAME" \
+    --url="https://$DOMAIN_NAME" \
     --title="$WP_TITLE" \
     --admin_user="$WP_ADMIN_USER" \
     --admin_password="$WP_ADMIN_PASSWORD" \
